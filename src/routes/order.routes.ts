@@ -1,4 +1,3 @@
-// src/routes/order.routes.ts
 import express from 'express';
 import { 
   createOrder, 
@@ -8,10 +7,17 @@ import {
   getUserOrders,
   getUsersByProduct 
 } from '../controllers/order.controller';
+import { 
+  validateRequiredFields 
+} from '../utils/validation';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => await createOrder(req, res));
+router.post('/', 
+  validateRequiredFields(['user', 'product', 'quantity']),
+  async (req, res) => await createOrder(req, res)
+);
+
 router.put('/:id', async (req, res) => await updateOrder(req, res));
 router.get('/:id', async (req, res) => await getOrder(req, res));
 router.get('/recent', async (req, res) => await getRecentOrders(req, res));
