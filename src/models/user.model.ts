@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true 
 });
 
-// Create index on email for faster lookups
+
 userSchema.index({ email: 1 });
 
 export const User = mongoose.model('User', userSchema);

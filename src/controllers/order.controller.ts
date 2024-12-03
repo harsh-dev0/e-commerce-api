@@ -109,3 +109,17 @@ export const getUsersByProduct = async (req: Request, res: Response) => {
     res.status(400).json({ message: error instanceof Error ? error.message : 'Error fetching users by product' });
   }
 };
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const orders = await Order.find().populate('user').populate('product');
+    
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: 'No orders found' });
+    }
+    
+    res.json(orders);
+  } catch (error) {
+    res.status(400).json({ message: error instanceof Error ? error.message : 'Error fetching all orders' });
+  }
+};
